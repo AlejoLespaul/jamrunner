@@ -1,7 +1,6 @@
 package com.sondeos.jamrunner.Runner;
 
 import com.sondeos.jamrunner.JamRunnerApplication;
-import com.sondeos.jamrunner.Runner.JsRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -51,4 +50,5 @@ public class JsRunnerTest {
         assertTrue(result.contains("11 lines"));
         assertFalse(new File(workspace + name).exists());
     }
+
 }

@@ -16,13 +16,13 @@ public class Api {
     public static Logger logger = LoggerFactory.getLogger(Api.class);
 
     @PostMapping("/api/js")
-    public ResponseEntity jsProjectRunner(@RequestBody InfoRepo infoRepo) {
+    public ResponseEntity<InfoResult> jsProjectRunner(@RequestBody InfoRepo infoRepo) {
         try{
             logger.info("Request -> " + infoRepo);
             String response = new JsRunner(infoRepo.getRepo(), infoRepo.getName()).run();
             InfoResult result = new InfoResult(response);
             logger.info("Response -> " + result.toString());
-            return ResponseEntity.ok(result.toString());
+            return ResponseEntity.ok(result);
         } catch (Exception e){
             logger.warn(e.getMessage() + " StackTrace: " + e.getStackTrace());
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
