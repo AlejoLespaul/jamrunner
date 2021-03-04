@@ -14,3 +14,13 @@ Body:
     "repo": "https://github.com/the-code-challenge/chunkArrayInGroups",
     "name": "af"
 }
+```
+## RESPONSE
+```json
+{
+  "testPassed":4,
+  "testFailed":0,
+  "performance":"17ms",
+  "lines":7
+}
+```

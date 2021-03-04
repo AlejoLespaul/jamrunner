@@ -23,28 +23,37 @@ public class InfoResult {
     }
 
     private String parsePerformanse(String response) {
-        return parseResponse(response, REGEX_PERFORMANCE, matcher -> matcher.group(1), "-");
+        return parseResponse(response, REGEX_PERFORMANCE, "-");
     }
 
     private Integer parseLinesOfCode(String response) {
-        return parseResponse(response, REGEX_LINES, matcher -> (Object) Integer.valueOf( matcher.group(1)), 0);
+        return parseResponse(response, REGEX_LINES, 0);
     }
 
     private Integer parseTestFailed(String response) {
-        return parseResponse(response, REGEX_FAILING, matcher -> (Object) Integer.valueOf( matcher.group(1)), 0);
+        return parseResponse(response, REGEX_FAILING, 0);
     }
 
     private Integer parseTestPassed(String response) {
-        return parseResponse(response, REGEX_PASSING, matcher -> (Object) Integer.valueOf( matcher.group(1)), 0);
+        return parseResponse(response, REGEX_PASSING,0);
     }
 
-    private <T extends Object> T parseResponse(String response, String regexToParse, Callback<Matcher, Object> successFunction, Object defaultValue) {
+    private Integer parseResponse(String response, String regexToParse, Integer defaultValue) {
         Pattern pattern = Pattern.compile(regexToParse);
         Matcher matcher = pattern.matcher(response);
         if (matcher.find()) {
-            return (T) successFunction.call(matcher);
+            return Integer.valueOf(matcher.group(1));
         }
-        return (T) defaultValue;
+        return defaultValue;
+    }
+
+    private String parseResponse(String response, String regexToParse, String defaultValue) {
+        Pattern pattern = Pattern.compile(regexToParse);
+        Matcher matcher = pattern.matcher(response);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        return defaultValue;
     }
 
     public Integer getTestPassed() {
