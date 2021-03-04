@@ -1,5 +1,7 @@
-package com.sondeos.jamrunner;
+package com.sondeos.jamrunner.Runner;
 
+import com.sondeos.jamrunner.JamRunnerApplication;
+import com.sondeos.jamrunner.Runner.JsRunner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @WebAppConfiguration
 public class JsRunnerTest {
     private String workspace = "/tmp/";
+
     @Test
     public void can_run_an_exists_project() {
         String repo = "https://github.com/AlejoLespaul/factorialize";
@@ -37,6 +40,15 @@ public class JsRunnerTest {
             message = e.getMessage();
         }
         assertEquals(message, JsRunner.REPO_NOT_EXISTS);
+    }
+
+    @Test
+    public void can_know_how_many_lines_of_code_has_index_file() {
+        String repo = "https://github.com/AlejoLespaul/factorialize";
+        String name = "GroupA";
+        String result = new JsRunner(repo, name).run();
+
+        assertTrue(result.contains("11 lines"));
         assertFalse(new File(workspace + name).exists());
     }
 }

@@ -1,8 +1,6 @@
-package com.sondeos.jamrunner;
+package com.sondeos.jamrunner.Runner;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class JsRunner {
     public static final String REPO_NOT_EXISTS = "Repo not exists";
@@ -20,8 +18,17 @@ public class JsRunner {
         cloneReponsitory();
         installDependencies();
         String result = runTest();
+        result += countLines();
         cleanRepository();
         return result;
+    }
+
+    private String countLines() {
+        if (repoExists()){
+            Long result = countLineNumberReader("index.js");
+            return "   " + result + " lines";
+        }
+        return "";
     }
 
     private void cleanRepository() {
@@ -66,5 +73,25 @@ public class JsRunner {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private long countLineNumberReader(String fileName) {
+        String fullPath = this.workspace + this.name + "/" + fileName;
+        File file = new File(fullPath);
+
+        long lines = 0;
+
+        try (LineNumberReader lnr = new LineNumberReader(new FileReader(file))) {
+
+            while (lnr.readLine() != null) ;
+
+            lines = lnr.getLineNumber();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return lines;
+
     }
 }

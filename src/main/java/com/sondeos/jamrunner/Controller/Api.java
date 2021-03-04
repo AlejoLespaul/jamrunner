@@ -1,5 +1,8 @@
-package com.sondeos.jamrunner;
+package com.sondeos.jamrunner.Controller;
 
+import com.sondeos.jamrunner.Dto.InfoRepo;
+import com.sondeos.jamrunner.Dto.InfoResult;
+import com.sondeos.jamrunner.Runner.JsRunner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -17,9 +20,9 @@ public class Api {
         try{
             logger.info("Request -> " + infoRepo);
             String response = new JsRunner(infoRepo.getRepo(), infoRepo.getName()).run();
-            logger.info("Response -> " + response);
-            String[] array = response.trim().split("  ");
-            return ResponseEntity.ok(getTestInfo(array));
+            InfoResult result = new InfoResult(response);
+            logger.info("Response -> " + result.toString());
+            return ResponseEntity.ok(result.toString());
         } catch (Exception e){
             logger.warn(e.getMessage() + " StackTrace: " + e.getStackTrace());
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

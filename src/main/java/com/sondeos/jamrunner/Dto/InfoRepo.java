@@ -1,4 +1,4 @@
-package com.sondeos.jamrunner;
+package com.sondeos.jamrunner.Dto;
 
 public class InfoRepo {
     private String repo;
